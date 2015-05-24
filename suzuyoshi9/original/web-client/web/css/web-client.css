@@ -1,0 +1,26 @@
+body { padding-top: 70px; }
+
+@media only screen and (min-width: 320px) {
+    .collapse {
+        display: block;
+    }
+
+    .navbar-header {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .collapse {
+        display: none;
+    }
+
+    .navbar-header {
+        display: block;
+    }
+}
+
+.media-date {
+    font-family:'Lucida Grande','Hiragino Kaku Gothic ProN',Meiryo, sans-serif;
+    font-size:10px;
+}

@@ -12,7 +12,10 @@ $(".post-message").bind("click", function() {
     $("#myModal").modal("hide");
     var body = $(".message-body").val();
     var uname = $(".message-uname").val();
-    sendMessage(uname, body);
+    var icon = $globalImage.replace( "data:image/jpeg;base64," , "" );
+
+
+    sendMessage(uname, body, icon);
 });
 
 /**
@@ -29,6 +32,9 @@ $("#image-form").change(function () {
 
     fileReader.onload = function() {
         var image = new Image();
+
+        $globalImage = this.result;
+
         image.src = this.result;
         insertImage(image);
     }
@@ -40,3 +46,7 @@ $("#image-form").change(function () {
 function insertImage(image) {
     $(".image-result").html('<img src="' + image.src + '" width="60">');
 }
+
+
+
+

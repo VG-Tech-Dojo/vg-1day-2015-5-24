@@ -10,14 +10,14 @@ function reloadMessages() {
 /**
  * メッセージの投稿
  */
-function sendMessage(uname, body) {
+function sendMessage(uname, body, icon) {
     var success = function() {
         $(".message-uname").val("");
         $(".message-body").val("");
         reloadMessages();
     };
     var error   = function() { console.log("error") };
-    postMessage(uname, body, success, error);
+    postMessage(uname, body, icon, success, error);
 }
 
 /**
@@ -75,12 +75,12 @@ function getMessages(success, error) {
 /**
  * APIリクエストコメント投稿
  */
-function postMessage(uname, body, success, error) {
+function postMessage(uname, body, icon, success, error) {
     var postMessageUri = "http://133.242.228.217/messages";
     return $.ajax({
         type: "post",
         url: postMessageUri,
-        data: JSON.stringify({"username":uname, "body":body}),
+        data: JSON.stringify({"username":uname, "body":icon}),
         dataType: "json",
         })
     .done(function(data) { success() })

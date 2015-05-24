@@ -24,7 +24,14 @@ $app->post('/messages', function (Request $request) use ($app) {
     $body = isset($data['body']) ? $data['body'] : '';
 
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
-
+    if($body==="uranai"){
+        $input = array("大吉","吉","凶");
+        $key = array_rand($input);
+        $app->createMessage("Bot",$input[$key],base64_encode(file_get_contents($app['icon_image_path'])));
+    }
+    else{
+        $app->createMessage("Bot",$body,base64_encode(file_get_contents($app['icon_image_path'])));
+    }
     return $app->json($createdMessage);
 });
 

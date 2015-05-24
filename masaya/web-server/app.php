@@ -25,6 +25,19 @@ $app->post('/messages', function (Request $request) use ($app) {
 
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
 
+    if ($body == "uranai") {
+        $randomNum = rand(0, 100);
+        if ($randomNum < 10){
+            $createdMessage = $app->createMessage('UranaiBot', "Hi! " . $username . ", you are [daikichi]", base64_encode(file_get_contents($app['icon_image_path'])));
+        }elseif ($randomNum < 90) {
+            $createdMessage = $app->createMessage('UranaiBot', "Hi! " . $username . ", you are [kichi]", base64_encode(file_get_contents($app['icon_image_path'])));
+        }else{
+            $createdMessage = $app->createMessage('UranaiBot', "Hi! " . $username . ", you are [kyou]", base64_encode(file_get_contents($app['icon_image_path'])));
+        }
+    } else {
+        $createdMessage = $app->createMessage('Bot', $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    }
+
     return $app->json($createdMessage);
 });
 

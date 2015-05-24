@@ -22,8 +22,19 @@ $app->post('/messages', function (Request $request) use ($app) {
 
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
+    
+    $randomNum = rand(0,100);
 
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    
+    if($randomNum < 20){
+        $createdMessage = $app->createMessage(Bot_HOGE, kyou, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else if($randomNum < 90){
+        $createdMessage = $app->createMessage(Bot_HOGE, kichi, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else{
+        $createdMessage = $app->createMessage(Bot_HOGE, daikichi, base64_encode(file_get_contents($app['icon_image_path'])));
+    }
+    
 
     return $app->json($createdMessage);
 });

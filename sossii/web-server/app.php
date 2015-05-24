@@ -24,8 +24,9 @@ $app->post('/messages', function (Request $request) use ($app) {
     $body = isset($data['body']) ? $data['body'] : '';
 
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    $botMessage = $app->createMessage("Bot SOSSII", $body, base64_encode(file_get_contents($app['icon_image_path'])));
 
-    return $app->json($createdMessage);
+	return $app->json($createdMessage);
 });
 
 return $app;

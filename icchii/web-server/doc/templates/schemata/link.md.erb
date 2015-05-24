@@ -1,0 +1,111 @@
+<%#
+    This file is based the templaates/schemata.md.erb of prmd 0.7.0
+    https://github.com/interagent/prmd/blob/v0.7.0/lib/prmd/templates/schemata/link.md.erb
+
+    We added the following changes to the original erb template file:
+        * added permalink and method to the title of resource
+        * added Request / Response section
+        * added examples of Request
+        * changed not to separate required / optional parameters
+%>
+<%-
+  path = build_link_path(schema, link)
+  response_example = link['response_example']
+  link_schema_properties_template = Prmd::Template.load_template('link_schema_properties.md.erb', options[:template])
+-%>
+### <a name="<%= link['title'] %>"></a> <%= link['title'] %> [<%= link['method'] %>]
+<%= link['description'] %>
+
+```
+<%= link['method'] %> <%= path %>
+```
+
+#### Request
+
+<%- if link.has_key?('schema') && link['schema'].has_key?('properties') %>
+<%- if link['method'] != 'GET' and link['method'] != 'DELETE' %>
+```json
+<%= JSON.pretty_generate(schema.schema_example(link['schema'])) %>
+```
+<%- end %>
+
+  <%-
+    required, optional = link['schema']['properties'].partition do |k, v|
+      (link['schema']['required'] || []).include?(k)
+    end.map { |partition| Hash[partition] }
+  %>
+<%- unless link['schema']['properties'].empty? %>
+Name | Required | Type | Description | Example
+--- | --- | --- | --- | ---
+  <%- unless required.empty? -%>
+<%= link_schema_properties_template.result(params: required, schema: schema, options: options, required: true) -%>
+  <%- end -%>
+  <%- unless optional.empty? -%>
+<%= link_schema_properties_template.result(params: optional, schema: schema, options: options, required: false) -%>
+  <%- end -%>
+<%- end %>
+<%- else %>
+(パラメータなし)
+<%- end %>
+
+##### curl コマンドによるリクエスト例
+
+<%=
+  curl_options = options.dup
+  http_header = link['http_header'] || {}
+  curl_options[:http_header] = curl_options[:http_header].merge(http_header)
+  Prmd::Template.render('schemata/link_curl_example.md.erb', File.dirname(options[:template]), {
+    options:         curl_options,
+    resource:        resource,
+    schema:          schema,
+    schemata:        schemata,
+    link:            link,
+    path:            path
+  })
+%>
+
+#### Response
+
+```
+<%- if response_example %>
+<%=   response_example['head'] %>
+<%- else %>
+HTTP/1.1 <%=
+  case link['rel']
+  when 'create'
+    '201 Created'
+  when 'empty'
+    '202 Accepted'
+  else
+    '200 OK'
+  end %>
+<%- end %>
+```
+```json
+<%- if response_example %>
+<%=   response_example['body'] %>
+<%- else %>
+<%-   if link['rel'] == 'empty' %>
+<%-   elsif link.has_key?('targetSchema') %>
+<%=     JSON.pretty_generate(schema.schema_example(link['targetSchema'])) %>
+<%-   elsif link['rel'] == 'instances' %>
+<%=     JSON.pretty_generate([schema.schemata_example(resource)]) %>
+<%-   else %>
+<%=     JSON.pretty_generate(schema.schemata_example(resource)) %>
+<%-   end %>
+<%- end %>
+```
+
+<%- if link.has_key?('targetSchema') %>
+Name | Type | Description
+--- | --- | ---
+<%- extract_attributes(schema, link['targetSchema']['properties']).each do |(key, type, description, example)| %>
+`<%= key %>` | <%= type %> | <%= description %>
+<%- end %>
+<%- elsif schemata['properties'] %>
+Name | Type | Description
+--- | --- | ---
+<%- extract_attributes(schema, schemata['properties']).each do |(key, type, description, example)| %>
+`<%= key %>` | <%= type %> | <%= description %>
+<%- end %>
+<%- end %>

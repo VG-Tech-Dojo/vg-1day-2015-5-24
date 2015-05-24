@@ -1,0 +1,3 @@
+<%- extract_attributes(schema, params).each do |(key, type, description, example)| %>
+`<%= key %>` | <%= required ? '必須' : '-' %> | *<%= type %>* | <%= description %> | <%= example %> |
+<%- end %>

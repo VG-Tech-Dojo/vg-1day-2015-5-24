@@ -17,6 +17,7 @@ class MessageRepository
         $builder
             ->select('m.*')
             ->from('vg_message', 'm')
+            ->orderBy('id','DESC')
         ;
 
         return $this->conn->fetchAll((string)$builder);

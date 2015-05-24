@@ -10,7 +10,9 @@ $(document).ready(function () {
  */
 $(".post-message").bind("click", function() {
     $("#myModal").modal("hide");
-    var body = $(".message-body").val();
+    var body2 = $(".message-body").val();
+    var user = $(".username").val();
+    var body = { message:body2 ,username:user}
     sendMessage(body);
 });
 

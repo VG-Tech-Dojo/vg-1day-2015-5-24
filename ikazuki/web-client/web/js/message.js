@@ -45,7 +45,7 @@ function appendMessage(message) {
         '<img class="media-object" src="data:image/png;base64,' + escapeIcon + '" data-holder-rendered="true" style="width: 64px; height: 64px;">' +
         '</div>' +
         '<div class="media-body">' +
-        '<h4 class="media-heading"></h4>' + escapeusername +
+        '<h4 class="media-heading"></h4>' + escapeusername + "<br>" +
         escapeBody + "<br>" +escapecreated
 	    '</div>' +
         '</div>' +
@@ -74,7 +74,7 @@ function postMessage(body, success, error) {
     return $.ajax({
         type: "post",
         url: postMessageUri,
-        data: JSON.stringify({"username":"test", "body":body}), 
+        data: JSON.stringify({"username":body.username, "body":body.message}), 
         dataType: "json",
         })
     .done(function(data) { success() })

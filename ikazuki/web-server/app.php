@@ -7,7 +7,6 @@ $app['debug'] = true;
 
 $app->get('/messages', function () use ($app) {
     $messages = $app->getAllMessages();
-
     return $app->json($messages);
 });
 
@@ -22,8 +21,14 @@ $app->post('/messages', function (Request $request) use ($app) {
 
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
-
-    $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    
+    if($data['body'] === "uranai"){
+    $input = array("daikichi", "kichi", "kyou");
+    $rand_keys = array_rand($input, 2);
+    $body = $input[$rand_keys[0]];
+    $createdMessage = $app->createMessage("Bot", $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else{
+    $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));}
 
     return $app->json($createdMessage);
 });

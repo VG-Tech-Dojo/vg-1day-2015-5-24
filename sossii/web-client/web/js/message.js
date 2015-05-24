@@ -31,11 +31,36 @@ function appendMessages(data) {
 }
 
 /**
+ * 2桁にゼロ埋め
+ */
+var toDoubleDigits = function(num) {
+  num += "";
+  if (num.length === 1) {
+    num = "0" + num;
+  }
+ return num;     
+};
+
+/**
+ * 日付のフォーマット
+ */
+var formatDate = function(date) {
+  var yyyy = date.getFullYear();
+  var mm = toDoubleDigits(date.getMonth() + 1);
+  var dd = toDoubleDigits(date.getDate());
+  var hh = toDoubleDigits(date.getHours());
+  var mi = toDoubleDigits(date.getMinutes());
+  var sec = toDoubleDigits(date.getSeconds());
+  return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mi + ':' + sec;
+};
+
+/**
  * メッセージ挿入
  */
 function appendMessage(message) {
 	var escapeBody = $("<div/>").text(message.body).html();
 	var escapeIcon = $("<div/>").text(message.icon).html();
+	var escapeCreatedAt = $("<div/>").text(formatDate(new Date(message.created_at))).html();
 
     var messageHTML = '<tr><td>' +
         '<div class="media message">'　+
@@ -45,6 +70,9 @@ function appendMessage(message) {
         '<div class="media-body">' +
         '<h4 class="media-heading"></h4>' +
         escapeBody +
+	    '</div>' +
+	    '<div>' +
+        escapeCreatedAt +
 	    '</div>' +
         '</div>' +
         '</td></tr>';

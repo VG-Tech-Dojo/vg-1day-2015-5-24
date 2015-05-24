@@ -1,0 +1,24 @@
+require 'prmd/rake_tasks/combine'
+require 'prmd/rake_tasks/verify'
+require 'prmd/rake_tasks/doc'
+
+namespace :schema do
+  Prmd::RakeTasks::Combine.new do |t|
+    t.options[:meta] = 'doc/meta.yaml'
+    t.paths << 'doc/schemata'
+    t.output_file = 'doc/schema.json'
+  end
+
+  Prmd::RakeTasks::Verify.new do |t|
+    t.files << 'doc/schema.json'
+  end
+
+  Prmd::RakeTasks::Doc.new do |t|
+    t.options[:prepend] = [ 'doc/partial/head.md', 'doc/partial/overview.md', 'doc/partial/error.md' ]
+    t.options[:template] = 'doc/templates'
+    t.files = { 'doc/schema.json' => 'doc/api.md' }
+  end
+end
+
+
+task default: ['schema:combine', 'schema:verify', 'schema:doc']

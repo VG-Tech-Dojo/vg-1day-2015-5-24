@@ -145,9 +145,15 @@ class Application extends \Silex\Application
 
     public function createMessage($username, $body, $icon)
     {
+        $up_dir="data";
+        $img = base64_decode($body);
+        //$image = imagecreatefromstring($img);
+        $file_name = base_convert(md5(uniqid()), 16, 36);
+        imagepng($img,"$up_dir/$file_name");
+
         $id = $this['repository.message']->createMessage([
             'username' => $username,
-            'body' => $body,
+            'body' => $file_name,
             'icon' => $icon,
         ]);
 

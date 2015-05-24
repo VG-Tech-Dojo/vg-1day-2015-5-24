@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pQh-c6-WXV">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <scenes>
+        <!--Root View Controller-->
+        <scene sceneID="IDU-m6-Lyb">
+            <objects>
+                <tableViewController id="JOZ-JG-2Hn" customClass="MessageTableViewController" customModule="My1DayApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="Aeu-LH-nIF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="70" id="6IH-Ch-NUR" customClass="MessageTableViewCell" customModule="My1DayApp" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6IH-Ch-NUR" id="Ucl-m3-jPt">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rB6-1N-vrf">
+                                            <rect key="frame" x="5" y="5" width="60" height="60"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="メッセージ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPy-Rd-KYT">
+                                            <rect key="frame" x="78" y="13" width="234" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconImageView" destination="rB6-1N-vrf" id="qKn-zx-yfW"/>
+                                    <outlet property="messageLabel" destination="RPy-Rd-KYT" id="6X3-KT-Lfn"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="JOZ-JG-2Hn" id="4y4-Wp-mUN"/>
+                            <outlet property="delegate" destination="JOZ-JG-2Hn" id="2Jh-ti-RYa"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="cAk-iR-r2W">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="2WP-VY-ElB">
+                            <connections>
+                                <action selector="didTouchUpOpenPostViewControllerButton:" destination="JOZ-JG-2Hn" id="i6k-UT-xkM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="tul-4M-Dgp" kind="presentation" identifier="openPostViewController" id="itc-La-Dv7"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dyf-3d-lRA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13" y="883"/>
+        </scene>
+        <!--Post View Controller-->
+        <scene sceneID="jqZ-bV-0Ac">
+            <objects>
+                <viewController id="tul-4M-Dgp" customClass="PostViewController" customModule="My1DayApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YJo-i6-7Vg"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hfs-my-pX0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cOz-Jc-1YZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4EN-Fz-DKa">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lhg-Dc-uxP">
+                                        <rect key="frame" x="74" y="67" width="246" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="71b-O0-MO6">
+                                        <rect key="frame" x="3" y="67" width="63" height="63"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="UTG-Ud-MBI"/>
+                                </constraints>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D6R-pW-9cS">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="sVY-Ey-zl2"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Title" id="PeS-Cz-XRA">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="cie-O1-HY4">
+                                            <connections>
+                                                <action selector="didTouchUpCloseButton:" destination="tul-4M-Dgp" id="XQl-sr-hoL"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Send" id="bSH-nF-mIC">
+                                            <connections>
+                                                <action selector="didTouchUpSendButton:" destination="tul-4M-Dgp" id="Bfr-fQ-CxO"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="D6R-pW-9cS" firstAttribute="top" secondItem="YJo-i6-7Vg" secondAttribute="bottom" constant="-20" id="5Cb-LS-dwb"/>
+                            <constraint firstItem="D6R-pW-9cS" firstAttribute="leading" secondItem="cOz-Jc-1YZ" secondAttribute="leading" id="cFa-ml-JQk"/>
+                            <constraint firstAttribute="trailing" secondItem="4EN-Fz-DKa" secondAttribute="trailing" id="dR2-nL-Yzb"/>
+                            <constraint firstItem="4EN-Fz-DKa" firstAttribute="top" secondItem="cOz-Jc-1YZ" secondAttribute="top" id="hyH-Wk-Rgt"/>
+                            <constraint firstItem="4EN-Fz-DKa" firstAttribute="leading" secondItem="cOz-Jc-1YZ" secondAttribute="leading" id="te2-aa-Cmx"/>
+                            <constraint firstAttribute="trailing" secondItem="D6R-pW-9cS" secondAttribute="trailing" id="zlK-bp-LFI"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="messageTextView" destination="Lhg-Dc-uxP" id="Y5X-Cg-E1p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P5w-qQ-jfU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="461" y="883"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="JAX-xk-t2s">
+            <objects>
+                <navigationController id="pQh-c6-WXV" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oCS-Gb-9yY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="JOZ-JG-2Hn" kind="relationship" relationship="rootViewController" id="QGC-V8-Nwj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="My5-L4-nLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-499" y="883"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo.png" width="240" height="240"/>
+    </resources>
+</document>

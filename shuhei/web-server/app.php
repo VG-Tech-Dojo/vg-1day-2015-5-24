@@ -23,7 +23,60 @@ $app->post('/messages', function (Request $request) use ($app) {
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
 
-    $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    if ($data['body'] == "uranai") {
+      switch (mt_rand (0, 9)) {
+        case 0:
+        case 1:
+          $createdMessage = $app->createMessage("Bot_uranai", "daikichi", base64_encode(file_get_contents($app['icon_image_path'])));
+          break;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+          $createdMessage = $app->createMessage("Bot_uranai", "kichi", base64_encode(file_get_contents($app['icon_image_path'])));
+          break;
+        case 8:
+        case 9:
+          $createdMessage = $app->createMessage("Bot_uranai", "kyou", base64_encode(file_get_contents($app['icon_image_path'])));
+          break;
+        default:
+          $createdMessage = $app->createMessage("Bot_uranai", "kichi", base64_encode(file_get_contents($app['icon_image_path'])));
+          break;
+        }
+    } else if (strstr($body, "sum")) {
+      $numArray = explode(" ", $body);
+      $count = $numArray[1];
+      for ($i=2; $i < count($numArray); $i++) {
+        $count = $count + $numArray[$i];
+      }
+      $createdMessage = $app->createMessage("sum", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    } elseif (strstr($body, "sub")) {
+      $numArray = explode(" ", $body);
+      $count = $numArray[1];
+      for ($i=2; $i < count($numArray); $i++) {
+        $count = $count - $numArray[$i];
+      }
+      $createdMessage = $app->createMessage("sub", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    } elseif (strstr($body, "mul")) {
+      $numArray = explode(" ", $body);
+      $count = $numArray[1];
+      for ($i=2; $i < count($numArray); $i++) {
+        $count = $count * $numArray[$i];
+      }
+      $createdMessage = $app->createMessage("mul", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    } elseif (strstr($body, "dev")) {
+      $numArray = explode(" ", $body);
+      $count = $numArray[1];
+      for ($i=2; $i < count($numArray); $i++) {
+        $count = $count / $numArray[$i];
+      }
+      $createdMessage = $app->createMessage("dev", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    } else {
+      $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+      $createdMessage = $app->createMessage("Bot", $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    }
 
     return $app->json($createdMessage);
 });

@@ -35,7 +35,7 @@ $app->post('/messages', function (Request $request) use ($app) {
         }else{
             $createdMessage = $app->createMessage('UranaiBot', "kyou", base64_encode(file_get_contents($app['icon_image_path'])));
         }
-    } else () {
+    } else {
         $createdMessage = $app->createMessage('Bot', $body, base64_encode(file_get_contents($app['icon_image_path'])));
     }
 

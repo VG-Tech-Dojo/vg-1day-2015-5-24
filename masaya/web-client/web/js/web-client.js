@@ -11,7 +11,8 @@ $(document).ready(function () {
 $(".post-message").bind("click", function() {
     $("#myModal").modal("hide");
     var body = $(".message-body").val();
-    sendMessage(body);
+    var uname = $(".message-uname").val();
+    sendMessage(uname, body);
 });
 
 /**

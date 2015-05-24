@@ -23,7 +23,48 @@ $app->post('/messages', function (Request $request) use ($app) {
     $username = isset($data['username']) ? $data['username'] : '';
     $body = isset($data['body']) ? $data['body'] : '';
 
-    $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    if(strstr($body, 'uranai')){
+
+    	$i = rand(0,2);
+    	if($i == 0){
+    		$createdMessage = $app->createMessage($username, "daikichi", base64_encode(file_get_contents($app['icon_image_path'])));
+    	}else if($i == 1){
+    		$createdMessage = $app->createMessage($username, "kichi", base64_encode(file_get_contents($app['icon_image_path'])));
+    	}else if($i == 2){
+    		$createdMessage = $app->createMessage($username, "kyou", base64_encode(file_get_contents($app['icon_image_path'])));
+    	}
+    }else if(strstr($body, 'sum')){
+    	$pieces = explode(" ", $body);
+    	$count = $pieces[1];
+		for($i = 2; $i < count($pieces) ; $i++){
+			$count = $count + $pieces[$i];
+		}
+		$createdMessage = $app->createMessage("Cal", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+
+    }else if(strstr($body, 'sub')){
+		$pieces = explode(" ", $body);
+    	$count = $pieces[1];
+		for($i = 2 ; $i < count($pieces) ; $i++){
+			$count = $count - $pieces[$i];
+		}
+		$createdMessage = $app->createMessage("Cal", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else if(strstr($body, 'dev')){
+		$pieces = explode(" ", $body);
+    	$count = $pieces[1];
+		for($i = 2 ; $i < count($pieces) ; $i++){
+			$count = $count / $pieces[$i];
+		}
+		$createdMessage = $app->createMessage("Cal", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else if(strstr($body, 'mul')){
+		$pieces = explode(" ", $body);
+    	$count = $pieces[1];
+		for($i = 2 ; $i < count($pieces) ; $i++){
+			$count = $count * $pieces[$i];
+		}
+		$createdMessage = $app->createMessage("Cal", $count, base64_encode(file_get_contents($app['icon_image_path'])));
+    }else{
+    	 $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
+    }
 
     return $app->json($createdMessage);
 });

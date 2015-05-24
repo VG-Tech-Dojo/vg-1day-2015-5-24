@@ -14,6 +14,7 @@ protocol PostViewControllerDelagate : NSObjectProtocol {
 
 class PostViewController: UIViewController {
     @IBOutlet weak private var messageTextView: UITextView!
+    @IBOutlet weak var nameTextView: UITextField!
     weak var delegate: PostViewControllerDelagate?
     // Mission1-2 Storyboard から UITextField のインスタンス変数を追加
 
@@ -33,10 +34,11 @@ class PostViewController: UIViewController {
         self.messageTextView.resignFirstResponder()
         
         let message: String = self.messageTextView.text ?? ""
+        let name: String = self.nameTextView.text ?? ""
         // Mission1-2 UITextField のインスタンス変数から値を取得
         
         // Mission1-2 posetMessage の第2引数に 任意の値を渡す
-        APIRequest.postMessage(message, username: "名前はまだない") {
+        APIRequest.postMessage(message, username: name) {
             [weak self] (data, response, error) -> Void in
             
             self?.delegate?.postViewController(self!, didTouchUpCloseButton: sender)

@@ -19,7 +19,7 @@ class MessageTableViewCell: UITableViewCell {
         self.iconImageView.image = nil
         self.messageLabel.text = nil
         // Mission1-1 UILabel のインスタンス変数を初期化
-        self.created_Label = nil
+        self.created_Label.text = nil
     }
     
     func setupComponentsWithMessage(message: Message) {

@@ -25,6 +25,8 @@ $app->post('/messages', function (Request $request) use ($app) {
 
     $createdMessage = $app->createMessage($username, $body, base64_encode(file_get_contents($app['icon_image_path'])));
 
+    $createdMessage = $app->createMessage("Bot", $body, base64_encode(file_get_contents($app['icon_image_path'])));
+
     return $app->json($createdMessage);
 });
 

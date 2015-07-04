@@ -35,7 +35,9 @@ function appendMessages(data) {
  */
 function appendMessage(message) {
 	var escapeBody = $("<div/>").text(message.body).html();
-	var escapeIcon = $("<div/>").text(message.icon).html();
+    var escapeIcon = $("<div/>").text(message.icon).html();
+    var escapeCreatedAt = $("<div/>").text(message.created_at).html();
+
 
     var messageHTML = '<tr><td>' +
         '<div class="media message">'　+
@@ -45,6 +47,8 @@ function appendMessage(message) {
         '<div class="media-body">' +
         '<h4 class="media-heading"></h4>' +
         escapeBody +
+        '<br/>' +
+        escapeCreatedAt +
 	    '</div>' +
         '</div>' +
         '</td></tr>';
@@ -55,7 +59,7 @@ function appendMessage(message) {
  * APIリクエストコメント取得
  */
 function getMessages(success, error) {
-    var getMessageUri = "http://localhost:8888/messages";
+    var getMessageUri = "http://133.242.228.217/messages";
     return $.ajax({
         type: "get",
         url: getMessageUri,
@@ -68,11 +72,11 @@ function getMessages(success, error) {
  * APIリクエストコメント投稿
  */
 function postMessage(body, success, error) {
-    var postMessageUri = "http://localhost:8888/messages";
+    var postMessageUri = "http://133.242.228.217/messages";
     return $.ajax({
         type: "post",
         url: postMessageUri,
-        data: JSON.stringify({"username":"名前はまだない", "body":body}), 
+        data: JSON.stringify({"username":"名前はまだない", "body":body}),
         dataType: "json",
         })
     .done(function(data) { success() })
